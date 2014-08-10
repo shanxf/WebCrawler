@@ -32,8 +32,6 @@ function readArticleList (utl, callback) {
   	    articleList.push(item);
   	  };
     });
-    //输出结果
-    console.log(articleList);
   });
 }
 readArticleList('http://blog.sina.com.cn/s/articlelist_1776757314_0_1.html', function (err, articleList) {
