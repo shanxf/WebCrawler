@@ -6,7 +6,7 @@ debug('读取博文列表');
 
 function readArticleList (utl, callback) {
   //读取分类页面
-  request('http://blog.sina.com.cn/s/articlelist_1776757314_0_1.html', function (err, res) {
+  request(url, function (err, res) {
     if (err) {
       return console.error(err);
     };
@@ -32,6 +32,22 @@ function readArticleList (utl, callback) {
   	    articleList.push(item);
   	  };
     });
+
+    //检查是否有下一页
+    var nextUrl = $('.SG_pgnext a').attr('href');
+    if (nextUrl) {
+      //读取下一页
+      readArticleList(nextUrl, function (err, articleList2) {
+        if (err) {
+          return callback(err);
+        };
+        //合并结果
+        callback(null, articleList.concat(articleList2));
+      });
+    } else {
+      //返回结果
+      callback(null, articleList);
+    }
   });
 }
 readArticleList('http://blog.sina.com.cn/s/articlelist_1776757314_0_1.html', function (err, articleList) {
