@@ -11,7 +11,7 @@ exports.classList = function (list, callback) {
   	db.query('SELECT * FROM `class_list` WHERE `id`=? LIMIT 1', [item.id], function (err, data) {
   	  if (err) {
   	    return next(err);
-  	  };
+  	  }
   	  if (Array.isArray(data) && data.length >= 1) {
   	    //分类已存在，更新
   	    db.query('UPDATE `class_list` SET `name`=?, `url`=? WHERE `id`=?', [item.name, item.url, item.id], next);
@@ -33,19 +33,17 @@ exports.articleList = function (class_id, list, callback) {
   	  [item.id, class_id], function (err, data) {
   	  	if (err) {
   	  	  return next(err);
-  	  	};
+  	  	}
   	  	//将发布时间转成时间戳（秒）
   	  	var created_time = new Date(item.time).getTime()/1000;
   	  	if (Array.isArray(data) && data.length >= 1) {
-  	  	console.log('//:update:'+item.title);
   	  	  //分类已存在，更新
   	  	  db.query('UPDATE `article_list` SET `title`=?, `url`=?, `class_id`=?, `created_time`=? WHERE `id`=? AND `class_id`=?', 
   	  	  [item.title, item.url, class_id, created_time, item.id, class_id], next);
   	  	} else {
-  	  	console.log('//:insert:'+item.title.length);
   	  	  //分类不存在，添加
   	  	  db.query('INSERT INTO `article_list`(`id`,`title`,`url`,`class_id`,`created_time`) VALUES (?,?,?,?,?)',
-  	  	    [item.id, item.title, item.url, class_id, created_time], next);
+          [item.id, item.title, item.url, class_id, created_time], next);
   	  	}
   	  });
   }, callback);
@@ -64,7 +62,7 @@ exports.articleTags = function (id, tags, callback) {
   db.query('DELETE FROM `article_tag` WHERE `id`=?', [id], function (err) {
   	if (err) {
   	  return callback(err);
-  	};
+  	}
   	if (tags.length > 0) {
   	  //添加新标签信息
   	  //生成SQL代码
@@ -87,7 +85,7 @@ exports.articleDetail = function (id, tags, content, callback) {
   db.query('SELECT `id` FROM `article_detail` WHERE `id`=?', [id], function (err, data) {
   	if (err) {
   	  return callback(err);
-  	};
+  	}
   	tags = tags.join(' ');
   	if (Array.isArray(data) && data.length >=1 ) {
   	  //更新文章
@@ -104,8 +102,7 @@ exports.isAericleExists = function (id, callback) {
   db.query('SELECT `id` FROM `article_detail` WHERE `id`=?', [id], function (err, data) {
   	if (err) {
   	  return callback(err);
-  	};
+  	}
   	callback(null, Array.isArray(data) && data.length >=1);
   });
-}
-
+};

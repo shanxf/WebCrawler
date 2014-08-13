@@ -30,7 +30,7 @@ exports.classList = function (url, callback) {
   	  if (Array.isArray(s)) {
   	    item.id = s[1];
   	    classList.push(item);
-  	  };
+  	  }
   	});
   	//返回结果
   	callback(null, classList);
@@ -43,7 +43,7 @@ exports.articleList = function (url, callback) {
   request(url, function (err, res) {
   	if (err) {
   	  return callback(err);
-  	};
+  	}
   	//根据网页内容创建DOM操作对象
   	var $ = cheerio.load(res.body.toString());
   	//读取博文列表
@@ -62,7 +62,7 @@ exports.articleList = function (url, callback) {
   	  if (Array.isArray(s)) {
   	    item.id = s[1];
   	    articleList.push(item);
-  	  };
+  	  }
   	});
   	//检查是否有下一页
   	var nextUrl = $('.SG_pgnext a').attr('href');
@@ -71,7 +71,7 @@ exports.articleList = function (url, callback) {
   	  exports.articleList(nextUrl, function (err, articleList2) {
   	  	if (err) {
   	  	  return callback(err);
-  	  	};
+  	  	}
   	  	//合并结果
   	  	callback(null, articleList.concat(articleList2));
   	  });
@@ -99,7 +99,7 @@ exports.articleDetail = function (url, callback) {
   	  var tag = $(this).text().trim();
   	  if (tag) {
   	    tags.push(tag);
-  	  };
+  	  }
   	});
   	//获取文章内容
   	var content = $('.articalContent').html().trim();
@@ -109,5 +109,5 @@ exports.articleDetail = function (url, callback) {
   	  content: content
   	});
   });
-}
+};
 
