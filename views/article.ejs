@@ -1,0 +1,20 @@
+<script type="text/javascript" src="../public/javascript/jquery-1.11.1.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function() {
+  //解决图片无法显示问题，将<img src='**' real_src='**'>的real_src付给src
+  $("img").each(function(i){
+    var url = $(this).parent().attr('href');
+    if(url!=undefined && url.indexOf('url=')!=-1){
+      //alert(url.substring(url.indexOf('url=')+4));
+      //$(this).attr("src",url.substring(url.indexOf('url=')+4));
+      $(this).attr("src",$(this).attr('real_src'));
+    }
+  //alert($(this).attr('this.real_src'));
+  //$(this).attr("src",$(this).attr('real_src'));
+ });
+});
+</script>
+<div style='max-width:600px; margin:auto'>
+  <h1><%= article.title%></h1>
+  <%- article.content%>
+</div>

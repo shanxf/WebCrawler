@@ -12,3 +12,9 @@ exports.sinaBlog = {
   url: 'http://blog.sina.com.cn/u/1776757314' //博客首页地址
 };
 
+//定时更新
+exports.autoUpdate = '* * /30 * * *';
+
+exports.port = 3000;
+
+
